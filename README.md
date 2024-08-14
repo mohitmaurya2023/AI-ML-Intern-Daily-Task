@@ -14,8 +14,6 @@ Welcome to the AI-ML Internship Daily Tasks Repository. This repository serves a
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-  - [Running the Backend](#running-the-backend)
-  - [Running the Frontend](#running-the-frontend)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
 - [License](#license)
@@ -53,13 +51,13 @@ This repository is organized by daily task. Each task has its own dedicated dire
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/ai-ml-internship.git
-   cd ai-ml-internship
+   git clone https://github.com/mohitmaurya2023/AI-ML-Intern-Daily-Task.git
+   cd AI-ML-Intern-Daily-Task
 
 2. **Install dependencies and start the application:**
 
     ```bash
-    pip install
+    pip install -r requirements.txt
     streamlit run app.py
 
 
