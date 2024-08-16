@@ -16,6 +16,7 @@ Welcome to the AI-ML Internship Daily Tasks Repository. This repository serves a
   - [Installation](#installation)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
+- [Certifications](#certificates)
 - [License](#license)
 - [Contact](#contact)
 
@@ -73,6 +74,10 @@ Thank you for considering contributing to this project! Here are a few guideline
 3. Make your changes.
 4. Test your changes thoroughly.
 5. Submit a pull request.
+
+### Certifications
+
+## https://github.com/mohitmaurya2023/AI-ML-Intern-Daily-Task/tree/main/Certificates
 
 ### Reporting Issues
 
