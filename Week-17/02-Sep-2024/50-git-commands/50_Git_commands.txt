@@ -1,0 +1,43 @@
+﻿Git Cheat Sheet - 50 Git Commands  You Should Know
+
+
+
+
+What is a Distributed Version Control System?
+A distributed version control system is a system that helps you keep track of changes you’ve made to files in your project.
+
+
+This change history lives on your local machine and lets you revert to a previous version of your project with ease in case something goes wrong.
+
+
+
+
+1. How to check your Git configuration: 
+
+
+                          git config  -l              -l
+
+
+
+
+2. How to setup your Git username:
+git config  - -global user.name “Fabio”
+
+
+3. How to setup your Git user email:
+git config  - -global user.email “signups@fabiopacifici.com”
+
+
+4. How to cache your login credentials in Git:
+git config --global credential.helper cache
+
+
+5. How to initialize a Git repo:
+git init
+
+
+6. How to add a file to the staging area in Git:
+git add filename_here
+
+
+7.
