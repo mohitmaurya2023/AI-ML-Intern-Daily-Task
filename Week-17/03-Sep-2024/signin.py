@@ -127,7 +127,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Signup Page
-def signup():
+def signup():   
     st.title("Sign Up")
     with st.form("signup_form"):
         username = st.text_input("Username", key="signup_username")
@@ -161,36 +161,39 @@ def login():
     with st.form("login_form"):
         email = st.text_input("Email", key="login_email")
         password = st.text_input("Password", type="password", key="login_password")
-        if email:
-            if st.form_submit_button("Log In", key="login_button"):
-                user_data = load_user_data()
-                hashed_password = hash_password(password)
-                if email in user_data and user_data[email]["password"] == hashed_password:
-                    st.success(f"Welcome back, {user_data[email]['username']}!")
-                    st.session_state["logged_in"] = True
-                    st.session_state["username"] = user_data[email]['username']
-                else:
-                    st.error("Invalid email address or password.")
+        # if email:
+        if st.form_submit_button("Log In"):
+            user_data = load_user_data()
+            hashed_password = hash_password(password)
+            if email in user_data and user_data[email]["password"] == hashed_password:
+                st.success(f"Welcome back, {user_data[email]['username']}!")
+                st.session_state["logged_in"] = True
+                st.session_state["username"] = user_data[email]['username']
             else:
-                st.success("Logged in successfully!")
+                st.error("Invalid email address or password.")
+                # st.success("Logged in successfully!")
+
+            # else:
+            #     st.success("Logged in successfully!")
 
 def reset_password():
+    
     """Reset password page"""
     st.title("Reset Password")
     with st.form("reset_form"):
         email = st.text_input("Enter your email to reset your password", key="reset_email")
-        if st.form_submit_button("Send Reset Link", key="send_reset_link"):
-            if email:
-                user_data = load_user_data()
-                if email not in user_data:
-                    st.error("Invalid email address.")
-                else:
-                    token = str(uuid.uuid4())
-                    reset_tokens = load_reset_tokens()
-                    reset_tokens[token] = email
-                    save_reset_tokens(reset_tokens)
-                    if send_reset_email(email, token):
-                        st.success("Reset link sent to your email address.")
+        if st.form_submit_button("Send Reset Link"):
+            # if email:
+            user_data = load_user_data()
+            if email not in user_data:
+                st.error("Invalid email address.")
+            else:
+                token = str(uuid.uuid4())
+                reset_tokens = load_reset_tokens()
+                reset_tokens[token] = email
+                save_reset_tokens(reset_tokens)
+                if send_reset_email(email, token):
+                    st.success("Reset link sent to your email address.")
 
 def reset_password_confirm():
     """Reset password confirmation page"""
@@ -206,7 +209,7 @@ def reset_password_confirm():
             password = st.text_input("New Password", type="password", key="new_password")
             confirm_password = st.text_input("Confirm New Password", type="password", key="confirm_new_password")
 
-            if st.form_submit_button("Reset Password", key="reset_password_button"):
+            if st.form_submit_button("Reset Password"):
                 if password != confirm_password:
                     st.error("Passwords do not match.")
                 else:
@@ -221,26 +224,67 @@ def reset_password_confirm():
                         save_reset_tokens(reset_tokens)
                         st.success("Password reset successfully!")
 
+
+# Logout Function
+def logout():
+    st.session_state["logged_in"] = False
+    st.session_state["username"] = ""
+    st.session_state["email"] = ""
+    st.rerun()
+
 # Main App
 st.title("StockAI")
 
-pages = {
-    "Sign Up": signup,
-    "Log In": login,
-    "Reset Password": reset_password
-}
+# pages = {
+#     "Sign Up": signup,
+#     "Log In": login,
+#     "Reset Password": reset_password
+# }
 
-page = st.selectbox("Page", list(pages.keys()))
-if page == "Reset Password":
-    query_params = st.query_params
-    if 'token' in query_params and 'email' in query_params:
-        st.session_state.token = query_params['token'][0]
-        st.session_state.email = query_params['email'][0]
-        reset_password_confirm()
-    else:
-        reset_password()
+# page = st.selectbox("Page", list(pages.keys()))
+# if page == "Reset Password":
+#     query_params = st.query_params
+#     if 'token' in query_params and 'email' in query_params:
+#         st.session_state.token = query_params['token'][0]
+#         st.session_state.email = query_params['email'][0]
+#         reset_password_confirm()
+#     else:
+#         reset_password()
+# else:
+#     pages[page]()
+    
+
+if "logged_in" not in st.session_state:
+    st.session_state["logged_in"] = False
+if 'redirect_to_signin' in st.session_state and st.session_state['redirect_to_signin']:
+    st.session_state['redirect_to_signin'] = False
+    st.experimental_rerun()
+if st.session_state["logged_in"]:
+    st.sidebar.write(f"Welcome, {st.session_state['username']}!")
+    choice = st.sidebar.radio("Navigate", ["Dashboard", "Account", "Analysis", "Logout"])
+    if choice == "Dashboard":
+        # import dashboard
+        # Load dashboard page
+        st.write("This is the Dashboard page.")
+    elif choice == "Account":
+        # import Aboutpage
+        # Load account settings page
+        st.write("This is the Account page.")
+    elif choice == "Analysis":
+        # import analysis
+        # Load analysis page
+        st.write("This is the Analysis page.")
+    elif choice == "Logout":
+        logout()
 else:
-    pages[page]()
+    tabs = st.tabs(["Sign In", "Sign Up", "Reset Password"])
+    # Display the content based on the selected tab
+    with tabs[0]:
+        login()
+    with tabs[1]:
+        signup()
+    with tabs[2]:
+        reset_password()
 
 # Footer
 st.markdown("""

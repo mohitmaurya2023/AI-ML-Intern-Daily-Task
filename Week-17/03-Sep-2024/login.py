@@ -8,8 +8,8 @@ import uuid
 import json
 import re
 
-with open("styles/login.css") as f:
-    st.markdown("<style>" + f.read() + "</style>", unsafe_allow_html=True)
+# with open("styles/login.css") as f:
+#     st.markdown("<style>" + f.read() + "</style>", unsafe_allow_html=True)
 
 
 
@@ -80,6 +80,57 @@ def validate_password(password):
     return re.match(password_pattern, password)
 
 
+# Custom CSS for the app
+st.markdown("""
+<style>
+    body {
+        background-color: #f0f0f0;
+    }
+    .main {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #659;
+        border: 1px solid #fff;
+        border-radius: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    .header {
+        background-color: #3df;
+        color: #fcc;
+        padding: 10px;
+        text-align: center;
+    }
+    .header h1 {
+        margin: 0;
+    }
+    .form {
+        padding: 20px;
+    }
+    .form label {
+        display: block;
+        margin-bottom: 10px;
+    }
+    .form input[type="text"], .form input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 2px solid #ccc;
+    }
+    .form button[type="submit"] {
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .form button[type="submit"]:hover {
+        background-color: #3e8e41;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 
 # Signup Page
 def signup():
@@ -112,14 +163,14 @@ def signup():
 # Sign In Page
 def signin():
     
-    # Set background image
-    st.markdown("""
-    <style>
-    body {
-        background-color: white;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+    # # Set background image
+    # st.markdown("""
+    # <style>
+    # body {
+    #     background-color: white;
+    # }
+    # </style>
+    # """, unsafe_allow_html=True)
 
     st.subheader("Sign In")
     email = st.text_input("Email", key="signin_email")
@@ -161,10 +212,11 @@ def reset_password():
                 if email in user_data:
                     user_data[email]["password"] = hashed_password
                     save_user_data(user_data)
-                    st.success("Password has been reset. You can now log in.")
+                    # st.success("Password has been reset. You can now log in.")
                     reset_tokens = load_reset_tokens()
                     del reset_tokens[token]
                     save_reset_tokens(reset_tokens)
+                    st.success("Password reset successfully!")
     else:
         st.subheader("Forgot Password?")
         reset_email = st.text_input("Enter your email to reset your password", key="reset_email")
@@ -204,17 +256,17 @@ if st.session_state["logged_in"]:
     st.sidebar.write(f"Welcome, {st.session_state['username']}!")
     choice = st.sidebar.radio("Navigate", ["Dashboard", "Account", "Analysis", "Logout"])
     if choice == "Dashboard":
-        import dashboard
+        # import dashboard
         # Load dashboard page
-        # st.write("This is the Dashboard page.")
+        st.write("This is the Dashboard page.")
     elif choice == "Account":
-        import Aboutpage
+        # import Aboutpage
         # Load account settings page
-        # st.write("This is the Account page.")
+        st.write("This is the Account page.")
     elif choice == "Analysis":
-        import analysis
+        # import analysis
         # Load analysis page
-        # st.write("This is the Analysis page.")
+        st.write("This is the Analysis page.")
     elif choice == "Logout":
         logout()
 else:
